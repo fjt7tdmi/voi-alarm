@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <autoStartBouyomiChan>false</autoStartBouyomiChan>
+  <autoStartCevio>false</autoStartCevio>
+  <bouyomiChanPath></bouyomiChanPath>
+  <bouyomiChanPort>50001</bouyomiChanPort>
+  <showExternalToolsCheckDialog>true</showExternalToolsCheckDialog>
+  <alarms>
+    <alarm>
+      <time>09:30</time>
+      <monday>true</monday>
+      <tuesday>false</tuesday>
+      <wednesday>true</wednesday>
+      <thursday>true</thursday>
+      <friday>true</friday>
+      <saturday>false</saturday>
+      <sunday>false</sunday>
+      <message>仕事を始める時間です</message>
+    </alarm>
+    <alarm>
+      <time>12:30</time>
+      <monday>true</monday>
+      <tuesday>true</tuesday>
+      <wednesday>true</wednesday>
+      <thursday>true</thursday>
+      <friday>true</friday>
+      <saturday>false</saturday>
+      <sunday>false</sunday>
+      <message>お昼休みです</message>
+    </alarm>
+  </alarms>
+</settings>

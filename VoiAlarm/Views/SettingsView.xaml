@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="VoiAlarm.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:VoiAlarm.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <GroupBox
+            Grid.Row="0"
+            Margin="10"
+            Header="全般"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <CheckBox
+                Content="起動時に外部ツール確認ダイアログを表示"
+                ToolTip="VoiAlarm 起動時に、CeVIO や棒読みちゃんの状態を確認するダイアログを表示します"
+                IsChecked="{Binding ShowExternalToolsCheckDialog, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"/>
+        </GroupBox>
+        <GroupBox
+            Grid.Row="1"
+            Margin="10"
+            Header="CeVIO"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <CheckBox
+                Content="自動起動"
+                ToolTip="VoiAlarm 起動時に CeVIO を自動的に起動します"
+                IsChecked="{Binding AutoStartCevio, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"/>
+        </GroupBox>
+        <GroupBox
+            Grid.Row="2"
+            Margin="10"
+            Header="棒読みちゃん"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox
+                        Content="自動起動"
+                        ToolTip="VoiAlarm 起動時に棒読みちゃんを自動的に起動します"
+                        IsChecked="{Binding AutoStartBouyomiChan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="BouyomiChan.exe のパス"
+                        ToolTip="BouyomiChan.exe のパスを指定します。この項目が正しく設定されていない場合、棒読みちゃんを自動起動できません。"
+                        VerticalAlignment="Center"
+                        IsEnabled="{Binding AutoStartBouyomiChan}"
+                        Text="{Binding BouyomiChanPath}"/>
+                    <Button
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        IsEnabled="{Binding AutoStartBouyomiChan}"
+                        Command="{Binding ChooseFileCommand}"
+                        Content="..."
+                        Margin="5"
+                        Width="40"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label
+                        Content="TCP ポート番号"
+                        ToolTip="棒読みちゃんとの TCP ポート番号を指定します。この項目が正しく設定されていない場合、棒読みちゃんを利用できません。"
+                        VerticalAlignment="Center"/>
+                    <TextBox
+                        Width="50"
+                        MaxLength="5"
+                        Text="{Binding BouyomiChanPort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="NoWrap"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>
