@@ -9,7 +9,7 @@
     <alarm>
       <time>09:30</time>
       <monday>true</monday>
-      <tuesday>false</tuesday>
+      <tuesday>true</tuesday>
       <wednesday>true</wednesday>
       <thursday>true</thursday>
       <friday>true</friday>
