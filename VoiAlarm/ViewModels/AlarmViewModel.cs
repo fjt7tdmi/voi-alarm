@@ -51,7 +51,7 @@ namespace VoiAlarm.ViewModels
             get => DateTime.Parse(alarm.Time);
             set
             {
-                alarm.Time = value.ToString("hh:mm");
+                alarm.Time = value.ToString("HH:mm");
                 OnPropertyChanged(nameof(Time));
                 alarmHeaderViewModel.OnPropertyChanged();
             }
