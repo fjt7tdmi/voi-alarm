@@ -41,10 +41,14 @@ namespace VoiAlarm.Models
 
             if (settings.AutoStartBouyomiChan)
             {
-                LaunchBouyomiChan(settings.BouyomiChanPath);
+                // 棒読みちゃんの二重起動でエラーが表示されるのを防止するため、
+                // BouyomiChan.exe の存在をチェック
+                if (Process.GetProcessesByName("BouyomiChan").Length == 0)
+                {
+                    LaunchBouyomiChan(settings.BouyomiChanPath);
+                }
             }
         }
-
         public bool IsAvailable()
         {
             var port = settings.BouyomiChanPort;
