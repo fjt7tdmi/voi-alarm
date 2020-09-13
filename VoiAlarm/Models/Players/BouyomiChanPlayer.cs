@@ -89,7 +89,7 @@ namespace VoiAlarm.Models
 
         public void Play(PlayerCommand command)
         {
-            Trace.WriteLine($"{nameof(BouyomiChanPlayer)}.{nameof(Play)} {command.VoiceType} {command.Message}");
+            Trace.WriteLine($"{nameof(BouyomiChanPlayer)}.{nameof(Play)} {command.VoiceType} (message length: {command.Message.Length})");
 
             var port = settings.BouyomiChanPort;
 

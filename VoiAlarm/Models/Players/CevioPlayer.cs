@@ -62,7 +62,7 @@ namespace VoiAlarm.Models
 
         public void Play(PlayerCommand command)
         {
-            Trace.WriteLine($"{nameof(CevioPlayer)}.{nameof(Play)} {command.VoiceType} {command.Message}");
+            Trace.WriteLine($"{nameof(CevioPlayer)}.{nameof(Play)} {command.VoiceType} (message length: {command.Message.Length})");
 
             var talker = new Talker { Cast = command.VoiceType };
             talker.Speak(command.Message);

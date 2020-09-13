@@ -118,7 +118,7 @@ namespace VoiAlarm.Models
 
         public void PlayAudioFile(string path)
         {
-            Trace.WriteLine($"{nameof(PlayAudioFile)} {path}");
+            Trace.WriteLine($"{nameof(PlayAudioFile)} (path length: {path.Length})");
 
             using (var audioFileReader = new AudioFileReader(path))
             using (var stopEvent = new ManualResetEventSlim())
