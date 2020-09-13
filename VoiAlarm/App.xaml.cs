@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace VoiAlarm
 {
@@ -19,6 +20,8 @@ namespace VoiAlarm
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            DispatcherUnhandledException += OnDispatcherUnhandledException;
+
             if (!mutex.WaitOne(0, false))
             {
                 MessageBox.Show($"{appName} はすでに起動しています。", appName, MessageBoxButton.OK);
@@ -36,6 +39,14 @@ namespace VoiAlarm
                 mutex.Close();
                 mutex = null;
             }
+
+            DispatcherUnhandledException -= OnDispatcherUnhandledException;
+        }
+
+        private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            var message = e.Exception.Message + Environment.NewLine + e.Exception.StackTrace;
+            MessageBox.Show(message, $"{appName} 未処理例外");
         }
     }
 }
