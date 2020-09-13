@@ -164,6 +164,7 @@ namespace VoiAlarm.ViewModels
             {
                 alarm.FilePlayMode = Utils.GetFilePlayMode(value);
                 OnPropertyChanged(nameof(FilePlayMode));
+                OnPropertyChanged(nameof(IsFileSelectEnabled));
                 alarmHeaderViewModel.OnPropertyChanged();
             }
         }
