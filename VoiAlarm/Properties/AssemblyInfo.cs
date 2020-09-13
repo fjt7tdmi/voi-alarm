@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("VoiAlarm")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("UNITCOM PC")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("VoiAlarm")]
-[assembly: AssemblyCopyright("Copyright © UNITCOM PC 2020")]
+[assembly: AssemblyCopyright("Copyright © fjt7tdmi")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
