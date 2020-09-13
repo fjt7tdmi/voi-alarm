@@ -57,7 +57,14 @@ namespace VoiAlarm.Models
 
         public bool IsAvailable()
         {
-            return ServiceControl.IsHostStarted;
+            try
+            {
+                return ServiceControl.IsHostStarted;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Play(PlayerCommand command)
