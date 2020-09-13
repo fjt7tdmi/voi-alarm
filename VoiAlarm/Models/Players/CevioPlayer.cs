@@ -23,56 +23,104 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using CeVIO.Talk.RemoteService;
+using System.IO;
+using System.Reflection;
 
 namespace VoiAlarm.Models
 {
     internal class CevioPlayer
     {
+        private const string dllName = "CeVIO.Talk.RemoteService";
+
         private readonly SettingsManager settingsManager;
+        private readonly Assembly assembly;
 
         public IList<string> VoiceTypes { get; } = new List<string>();
 
         public CevioPlayer(SettingsManager settingsManager)
-        {
+        {            
             this.settingsManager = settingsManager;
 
             try
             {
-                if (settingsManager.Value.AutoStartCevio)
-                {
-                    ServiceControl.StartHost(false);
-                }
-                if (IsAvailable())
-                {
-                    VoiceTypes = TalkerAgent.AvailableCasts;
-                }
+                assembly = Assembly.LoadWithPartialName(dllName);
             }
-            catch (Exception)
+            catch (IOException)
             {
-                // 外部ツールの状態確認は他のビューやダイアログに任せるため、ここでは CeVIO が起動できなくても無視
+                // CeVIO がインストールされていない場合
+                Trace.WriteLine($"Failed to load {dllName}.dll");
+                return;
+            }
+
+            if (settingsManager.Value.AutoStartCevio)
+            {
+                CevioStartHost();
+            }
+
+            if (IsAvailable())
+            {
+                VoiceTypes = CevioAvailableCasts();
             }
         }
 
         public bool IsAvailable()
         {
-            try
-            {
-                return ServiceControl.IsHostStarted;
-            }
-            catch
+            if (assembly == null)
             {
                 return false;
             }
+
+            return CevioIsHostStarted();
         }
 
         public void Play(PlayerCommand command)
         {
             Trace.WriteLine($"{nameof(CevioPlayer)}.{nameof(Play)} {command.VoiceType} (message length: {command.Message.Length})");
 
-            var talker = new Talker { Cast = command.VoiceType };
-            talker.Speak(command.Message);
+            if (assembly == null)
+            {
+                return;
+            }
+
+            CevioSpeak(command.VoiceType, command.Message);
+        }
+
+        private void CevioStartHost()
+        {
+            // CeVIO.Talk.RemoteService.ServiceControl.StartHost(false)
+            var type = assembly.GetType("CeVIO.Talk.RemoteService.ServiceControl");
+            var method = type.GetMethod("StartHost");
+
+            method.Invoke(null, new object[] { false });
+        }
+
+        private IList<string> CevioAvailableCasts()
+        {
+            // CeVIO.Talk.RemoteService.TalkerAgent.AvailableCasts
+            var type = assembly.GetType("CeVIO.Talk.RemoteService.TalkerAgent");
+            var property = type.GetProperty("AvailableCasts");
+            
+            return (IList<string>)property.GetValue(null);
+        }
+
+        private bool CevioIsHostStarted()
+        {
+            // CeVIO.Talk.RemoteService.ServiceControl.IsHostStarted
+            var type = assembly.GetType("CeVIO.Talk.RemoteService.ServiceControl");
+            var property = type.GetProperty("IsHostStarted");
+
+            return (bool)property.GetValue(null);
+        }
+        
+        private void CevioSpeak(string cast, string text)
+        {
+            // var talker = new CeVIO.Talk.RemoteService.Talker { Cast = cast };
+            // talker.Speak(text);
+            var talkerType = assembly.GetType("CeVIO.Talk.RemoteService.Talker");
+            var speakMethod = talkerType.GetMethod("Speak");
+
+            var talkerInstance = Activator.CreateInstance(talkerType, new object[] { cast });
+            speakMethod.Invoke(talkerInstance, new object[] { text });
         }
     }
 }

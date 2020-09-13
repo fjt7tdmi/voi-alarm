@@ -42,10 +42,6 @@
     <ApplicationIcon>VoiAlarm.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CeVIO.Talk.RemoteService, Version=2.1.4.0, Culture=neutral, PublicKeyToken=85bf362f6144cc53, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\CeVIO\CeVIO Creative Studio (64bit)\CeVIO.Talk.RemoteService.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.2.6.1513, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.2.6\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
